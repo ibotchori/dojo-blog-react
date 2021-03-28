@@ -1,10 +1,15 @@
 const Navbar = () => {
     return (
-        <nav>
+        <nav className="navbar">
             <h1>The Dojo Blog</h1>
-            <div className="linsk">
+            <div className="links">
                 <a href="/">Home</a>
-                <a href="/create">New Blog</a>
+                {/* Inline styling */}
+                <a href="/create" style={{
+                    color: "white",
+                    backgroundColor: "#f1356d",
+                    borderRadius: "8px"
+                }}>New Blog</a>
             </div>
 
         </nav>
