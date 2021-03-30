@@ -12,7 +12,9 @@ const Home = () => {
     return (
         <div className="home">
             <BlogList blogs={blogs} title="All BLogs" /> {/* <-- pass blogs to BlogList component */}
+            <BlogList blogs={blogs.filter((blog) => blog.author === 'mario')} title="Mario's BLogs" /> {/* show only mario's blogs */}
         </div>
+
     )
 }
 
