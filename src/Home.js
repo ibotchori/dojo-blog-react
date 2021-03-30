@@ -7,12 +7,14 @@ const Home = () => {
         { title: 'Welcome party!', body: 'lorem ipsum...', author: 'yoshi', id: 2 },
         { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'mario', id: 3 }
     ])
-
+    const handleDelete = (id) => {
+        const newBlogs = blogs.filter(blog => blog.id != id) // <-- filter blogs
+        setBlogs(newBlogs) // save filtered blogs to newBlogs
+    }
 
     return (
         <div className="home">
-            <BlogList blogs={blogs} title="All BLogs" /> {/* <-- pass blogs to BlogList component */}
-            <BlogList blogs={blogs.filter((blog) => blog.author === 'mario')} title="Mario's BLogs" /> {/* show only mario's blogs */}
+            <BlogList blogs={blogs} title="All BLogs" handleDelete={handleDelete} /> {/* <-- pass blogs to BlogList component */}
         </div>
 
     )
