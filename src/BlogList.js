@@ -1,6 +1,5 @@
-const BlogList = (props) => { // <-- receive props
-    const blogs = props.blogs // <-- receive blogs from Home component
-    const title = props.title
+const BlogList = ({ blogs, title }) => { // <-- receive props
+
 
     return (
         <div className="blog-list">
