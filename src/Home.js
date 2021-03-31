@@ -4,11 +4,6 @@ import BlogList from './BlogList'
 const Home = () => {
     const [blogs, setBlogs] = useState(null)
 
-    const handleDelete = (id) => {
-        const newBlogs = blogs.filter(blog => blog.id != id) // <-- filter blogs
-        setBlogs(newBlogs) // save filtered blogs to newBlogs
-    }
-
     useEffect(() => {
         fetch('http://localhost:8000/blogs')
             .then(res => {
@@ -30,7 +25,7 @@ const Home = () => {
     return (
         <div className="home">
             {/* renders Bloglist after only blogs state will true, from the beginning blogs is null because we fill it from fech*/}
-            {blogs && <BlogList blogs={blogs} title="All BLogs" handleDelete={handleDelete} />}
+            {blogs && <BlogList blogs={blogs} title="All BLogs" />}
         </div>
 
     )
