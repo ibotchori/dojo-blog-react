@@ -1,40 +1,12 @@
 import { useState, useEffect } from 'react'
 import BlogList from './BlogList'
+import useFetch from './useFetch'
+
 
 const Home = () => {
-    const [blogs, setBlogs] = useState(null)
-    const [isPendign, setIsPending] = useState(true)
-    const [error, setError] = useState(null)
+    const { data: blogs, isPendign, error } = useFetch('http://localhost:8000/blogs') // use useFetch file in this component and send the url as a parameter
+    // data: blogs means, grab the data but call it blogs in this context
 
-    useEffect(() => {
-        setTimeout(() => {
-            fetch('http://localhost:8000/blogs')
-                .then(res => {
-
-                    if (!res.ok) { // <-- if server is unrichable. res.ok = falce
-                        throw Error('could not fetch the data for that resource ') // throw the error to catch block
-                    }
-                    return res.json()
-                })
-                .then(data => {
-                    setBlogs(data) // <-- updates blogs state
-                    setIsPending(false) // <-- after data is come, state becomes false
-                    setError(null) // <-- get rid of the error message if fetch is successful
-                })
-                .catch(err => {
-                    setIsPending(false) // <-- if we get the error laodnig message does not shown
-                    setError(err.message)  // <-- update state with error throw by catch block
-                })
-        }, 1000);
-    }, []) // <-- runs only first render 
-
-    /* // same process with async
-    useEffect(async () => {
-        const response = await fetch('http://localhost:8000/blogs')
-        const data = await response.json()
-        setBlogs(data) // <-- updates blogs state
-
-    }, []) // <-- runs only first render */
 
     return (
         <div className="home">
