@@ -2,11 +2,7 @@ import { useState, useEffect } from 'react'
 import BlogList from './BlogList'
 
 const Home = () => {
-    const [blogs, setBlogs] = useState([
-        { title: 'My new website', body: 'lorem ipsum...', author: 'mario', id: 1 },
-        { title: 'Welcome party!', body: 'lorem ipsum...', author: 'yoshi', id: 2 },
-        { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'mario', id: 3 }
-    ])
+    const [blogs, setBlogs] = useState(null)
 
     const handleDelete = (id) => {
         const newBlogs = blogs.filter(blog => blog.id != id) // <-- filter blogs
@@ -14,12 +10,27 @@ const Home = () => {
     }
 
     useEffect(() => {
-        // command to use Json Server: npx json-server --watch data/db.json --port 8000
-    }, []) // <-- runs only first render
+        fetch('http://localhost:8000/blogs')
+            .then(res => {
+                return res.json()
+            })
+            .then(data => {
+                setBlogs(data) // <-- updates blogs state
+            })
+    }, []) // <-- runs only first render 
+
+    /* // same process with async
+    useEffect(async () => {
+        const response = await fetch('http://localhost:8000/blogs')
+        const data = await response.json()
+        setBlogs(data) // <-- updates blogs state
+
+    }, []) // <-- runs only first render */
 
     return (
         <div className="home">
-            <BlogList blogs={blogs} title="All BLogs" handleDelete={handleDelete} /> {/* <-- pass blogs to BlogList component */}
+            {/* renders Bloglist after only blogs state will true, from the beginning blogs is null because we fill it from fech*/}
+            {blogs && <BlogList blogs={blogs} title="All BLogs" handleDelete={handleDelete} />}
         </div>
 
     )
