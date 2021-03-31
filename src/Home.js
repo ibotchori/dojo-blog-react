@@ -4,16 +4,26 @@ import BlogList from './BlogList'
 const Home = () => {
     const [blogs, setBlogs] = useState(null)
     const [isPendign, setIsPending] = useState(true)
+    const [error, setError] = useState(null)
 
     useEffect(() => {
         setTimeout(() => {
             fetch('http://localhost:8000/blogs')
                 .then(res => {
+
+                    if (!res.ok) { // <-- if server is unrichable. res.ok = falce
+                        throw Error('could not fetch the data for that resource ') // throw the error to catch block
+                    }
                     return res.json()
                 })
                 .then(data => {
                     setBlogs(data) // <-- updates blogs state
                     setIsPending(false) // <-- after data is come, state becomes false
+                    setError(null) // <-- get rid of the error message if fetch is successful
+                })
+                .catch(err => {
+                    setIsPending(false) // <-- if we get the error laodnig message does not shown
+                    setError(err.message)  // <-- update state with error throw by catch block
                 })
         }, 1000);
     }, []) // <-- runs only first render 
@@ -28,6 +38,7 @@ const Home = () => {
 
     return (
         <div className="home">
+            {error && <div>{error}</div>}
             {isPendign && <div>Loading...</div>} {/* <-- show this div only when isPending state is true */}
             {/* renders Bloglist after only blogs state will true, from the beginning blogs is null because we fill it from fech*/}
             {blogs && <BlogList blogs={blogs} title="All BLogs" />}
