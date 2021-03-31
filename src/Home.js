@@ -7,7 +7,6 @@ const Home = () => {
         { title: 'Welcome party!', body: 'lorem ipsum...', author: 'yoshi', id: 2 },
         { title: 'Web dev top tips', body: 'lorem ipsum...', author: 'mario', id: 3 }
     ])
-    const [name, setName] = useState('Mario')
 
     const handleDelete = (id) => {
         const newBlogs = blogs.filter(blog => blog.id != id) // <-- filter blogs
@@ -15,15 +14,12 @@ const Home = () => {
     }
 
     useEffect(() => {
-        console.log("use effect ran")
-        console.log(name)
-    }, [name]) // <-- runs only when name state is changed
+        // command to use Json Server: npx json-server --watch data/db.json --port 8000
+    }, []) // <-- runs only first render
 
     return (
         <div className="home">
             <BlogList blogs={blogs} title="All BLogs" handleDelete={handleDelete} /> {/* <-- pass blogs to BlogList component */}
-            <button onClick={() => setName('Luigi')} >Change name</button>
-            <p>{name}</p>
         </div>
 
     )
