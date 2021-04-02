@@ -1,10 +1,12 @@
 import { useState } from "react"
+import { useHistory } from 'react-router-dom'
 
 const Create = () => {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const [author, setAuthor] = useState('Mario') // set Mario to state by default
     const [isPending, setIsPending] = useState(false)
+    const history = useHistory() // <-- hook for redirect pages
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -19,7 +21,10 @@ const Create = () => {
         }).then(() => {
             console.log('new blog added')
             setIsPending(false) // <--  to hide loading message after data is sent
+            //history.go(-1) // <-- goes to prev page
+            history.push('/') // <-- goes to home page
         })
+
     }
 
     return (
