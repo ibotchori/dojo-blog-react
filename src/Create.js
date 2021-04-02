@@ -4,11 +4,22 @@ const Create = () => {
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
     const [author, setAuthor] = useState('Mario') // set Mario to state by default
+    const [isPending, setIsPending] = useState(false)
 
     const handleSubmit = (e) => {
         e.preventDefault()
         const blog = { title, body, author } // <-- create obj from states
-        console.log(blog)
+
+        setIsPending(true) // <-- to set loading message, while send data to server
+
+        fetch('http://localhost:8000/blogs', {
+            method: 'POST',  // <-- set post method to fetch
+            headers: { "Content-Type": "application/json" }, // <--  telling the server that we sending json data
+            body: JSON.stringify(blog) // <-- actual data which we sending with this request, before sending transform data to JSON
+        }).then(() => {
+            console.log('new blog added')
+            setIsPending(false) // <--  to hide loading message after data is sent
+        })
     }
 
     return (
@@ -36,10 +47,8 @@ const Create = () => {
                     <option value="Mario">Mario</option>
                     <option value="Yoshi">Yoshi</option>
                 </select>
-                <button>Add Blog</button>
-                <p>{title}</p>
-                <p>{body}</p>
-                <p>{author}</p>
+                {!isPending && <button>Add Blog</button>}
+                {isPending && <button disabled >Adding blog...</button>} {/* <-- show this button while data is sending to server */}
             </form>
         </div>
     )
