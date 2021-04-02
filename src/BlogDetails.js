@@ -3,10 +3,10 @@ import useFetch from "./useFetch"
 
 const BlogDetails = () => {
     const { id } = useParams() // <-- grab id from route
-    const { data: blog, error, isPendign } = useFetch(`http://localhost:8000/blogs/${id}`) // <-- reuse useFetch custom hook
+    const { data: blog, error, isPending } = useFetch(`http://localhost:8000/blogs/${id}`) // <-- reuse useFetch custom hook
     return (
         <div className="blog-details" >
-            {isPendign && <div>Loading...</div>}
+            {isPending && <div>Loading...</div>}
             {error && <div>{error}</div>}
             {blog && (
                 <article>

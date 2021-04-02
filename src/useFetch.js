@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 const useFetch = (url) => { // the url will received from component
     const [data, setData] = useState(null)
-    const [isPendign, setIsPending] = useState(true)
+    const [isPending, setIsPending] = useState(true)
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const useFetch = (url) => { // the url will received from component
         return () => abortCont.abort() // <-- abort fetch if page reload
     }, [url]) // <-- re-run this function when the url changes
 
-    return { data, isPendign, error } // <-- send properties to component which will uses this hook
+    return { data, isPending, error } // <-- send properties to component which will uses this hook
 }
 
 export default useFetch
